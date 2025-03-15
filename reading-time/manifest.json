@@ -16,7 +16,8 @@
                 "https://developer.chrome.com/docs/extensions/*",
                 "https://developer.chrome.com/docs/webstore/*",
                 "https://developer.chrome.com/docs/devtools/*",
-                "https://developer.chrome.com/docs/workbox/*"
+                "https://developer.chrome.com/docs/workbox/*",
+                "https://simonwillison.net/*"
             ]
         }
     ]

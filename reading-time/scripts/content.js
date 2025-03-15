@@ -1,4 +1,4 @@
-const article = document.querySelector("article");
+const article = document.querySelector("article, .entry.entryPage");
 
 // `document.querySelector` may return null if the selector doesn't match anything.
 if (article) {
@@ -14,7 +14,7 @@ if (article) {
     badge.textContent = `⏱️ ${readingTime} min read`;
 
     // Support for API reference docs
-    const heading = article.querySelector("h1");
+    const heading = article.querySelector("h1, h2");
     // Support for article docs with date
     const date = article.querySelector("time")?.parentNode;
 
