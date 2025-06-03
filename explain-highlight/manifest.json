@@ -1,0 +1,21 @@
+{
+    "name": "Explain Highlight",
+    "description": "Highlight text and get ChatGPT explanations.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "options_page": "options.html",
+    "permissions": ["storage"],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": [
+        "https://api.openai.com/*"
+    ]
+}
