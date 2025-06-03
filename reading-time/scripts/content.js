@@ -7,7 +7,7 @@ if (article) {
     const words = text.matchAll(wordMatchRegExp);
     // matchAll returns an iterator, convert to array to get word count
     const wordCount = [...words].length;
-    const readingTime = Math.round(wordCount / 200);
+    const readingTime = Math.max(1, Math.ceil(wordCount / 200));
     const badge = document.createElement("p");
     // Use the same styling as the article's header
     badge.classList.add("color-secondary-text", "type--caption");
@@ -17,6 +17,8 @@ if (article) {
     const heading = article.querySelector("h1, h2");
     // Support for article docs with date
     const date = article.querySelector("time")?.parentNode;
-
-    (date ?? heading).insertAdjacentElement("afterend", badge);
+    const target = date ?? heading;
+    if (target) {
+        target.insertAdjacentElement("afterend", badge);
+    }
 }
