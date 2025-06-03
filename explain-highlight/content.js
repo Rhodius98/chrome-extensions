@@ -1,4 +1,25 @@
 let popupElement;
+let styleInjected = false;
+
+function injectStyles() {
+  if (styleInjected) return;
+  const style = document.createElement('style');
+  style.textContent = `
+    .explain-popup {
+      padding: 8px 12px;
+      max-width: 320px;
+      font-family: sans-serif;
+      background: #ffffff;
+      color: #333;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: opacity 0.2s ease;
+    }
+  `;
+  document.head.appendChild(style);
+  styleInjected = true;
+}
 
 document.addEventListener('mouseup', () => {
   const selection = window.getSelection();
@@ -16,18 +37,21 @@ document.addEventListener('mouseup', () => {
 function showPopup(rect, text) {
   removePopup();
 
+  injectStyles();
+
   popupElement = document.createElement('div');
+  popupElement.className = 'explain-popup';
   popupElement.style.position = 'absolute';
   popupElement.style.top = `${window.scrollY + rect.bottom}px`;
   popupElement.style.left = `${window.scrollX + rect.left}px`;
-  popupElement.style.padding = '6px 8px';
-  popupElement.style.background = '#fff';
-  popupElement.style.border = '1px solid #ccc';
-  popupElement.style.boxShadow = '0 2px 6px rgba(0,0,0,0.2)';
   popupElement.style.zIndex = 2147483647;
+  popupElement.style.opacity = '0';
   popupElement.textContent = 'Loading...';
 
   document.body.appendChild(popupElement);
+  requestAnimationFrame(() => {
+    popupElement.style.opacity = '1';
+  });
 
   chrome.runtime.sendMessage({ type: 'explain', text }, (response) => {
     if (response && response.text) {
